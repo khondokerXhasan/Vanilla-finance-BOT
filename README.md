@@ -1,8 +1,8 @@
 # [![Static Badge](https://img.shields.io/badge/Telegram-Bot%20Link-Link?style=for-the-badge&logo=Telegram&logoColor=white&logoSize=auto&color=blue)](https://t.me/Vanilla_Finance_Bot/Vanillafinance?startapp=inviteId10512928)
 
-## Vanilla finance BOT
+## Tomarket Bot
 
-> **Recommendation**: Use **Python 3.10 - 3.11**
+> **Recommendation**: Use **Python 3.10**
 
 ---
 
@@ -16,7 +16,7 @@
 | Auto registration in bot          |     ✅     |
 | Auto-tasks                        |     ✅     |
 | Daily rewards                     |     ✅     |
-| Auto tap                          |     ✅     |
+| Auto tap                |     ✅     |
 | Auto upgrade level                |     ✅     |
 | Advanced anti-detection           |     ✅     |
 
@@ -36,15 +36,15 @@
 | **SAVE_JS_FILES**        | Save JavaScript files (experimental).                                                                    | `False`                |
 | **ADVANCED_ANTI_DETECTION** | Enable advanced anti-detection measures.                                                              | `True`                 |
 | **ENABLE_SSL**           | Enable or disable SSL.                                                                                   | `True`                 |
-| **USE_PROXY_FROM_FILE**  | Use proxy from `proxies.txt` file.                                                                                     | `False`                |
-| **GIT_UPDATE_CHECKER**   | Enable repository update checker.                                                                               | `True`                 |
+| **USE_PROXY_FROM_FILE**  | Use proxy from file.                                                                                     | `False`                |
+| **GIT_UPDATE_CHECKER**   | Enable Git update checker.                                                                               | `True`                 |
 ---
 ## Quick Start 📚
 
 To install dependencies and run the bot quickly, use the provided batch file (`run.bat`) for Windows or the shell script (`run.sh`) for Linux.
 
 ### Prerequisites
-Ensure you have **Python 3.10 - 3.11** installed.
+Ensure you have **Python 3.10 or Greater** installed.
 
 ### Obtaining API Keys
 1. Go to [my.telegram.org](https://my.telegram.org) and log in.
@@ -122,7 +122,7 @@ You can also use arguments for quick start, for example:
   {
     "session_name": "name_example",
     "user_agent": "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.6422.165 Mobile Safari/537.36",
-    "proxy": "type://user:pass:ip:port"  // "proxy": null if no proxy
+    "proxy": "type://user:pass:ip:port"  // "proxy": "" if no proxy
   }
 ]
 ```
