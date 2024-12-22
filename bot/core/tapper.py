@@ -26,7 +26,7 @@ from bot.exceptions import InvalidSession
 from bot.core.agents import extract_chrome_version
 from bot.core.registrator import get_tg_client
 from bot.utils.safe_guard import check_base_url
-from bot.utils.helper import extract_json_from_response, get_param, is_expired, configure_wallet, convert_utc_to_local, time_until
+from bot.utils.helper import extract_json_from_response, get_param, time_until
 from bot.utils.sign_generator import create_signature
 from bot.utils.websocket_handler import WebSocketHandler
 
