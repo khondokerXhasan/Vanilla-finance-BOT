@@ -1,6 +1,6 @@
 # [![Static Badge](https://img.shields.io/badge/Telegram-Bot%20Link-Link?style=for-the-badge&logo=Telegram&logoColor=white&logoSize=auto&color=blue)](https://t.me/Vanilla_Finance_Bot/Vanillafinance?startapp=inviteId10512928)
 
-## Tomarket Bot
+## Vanilla Finance Bot
 
 > **Recommendation**: Use **Python 3.10**
 
