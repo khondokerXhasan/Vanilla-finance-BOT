@@ -380,7 +380,8 @@ class Tapper:
         max_retries: int = 10,
         delay: int = 10,
         timeout: int = 50,
-        ssl: bool = settings.ENABLE_SSL
+        ssl: bool = settings.ENABLE_SSL,
+        sleep: int = 1
     ) -> Optional[Union[dict | list | int | str | bool]]:
         retries = 0
         while retries < max_retries:
@@ -390,7 +391,7 @@ class Tapper:
                         self.secret_key, params, payload)
                     http_client.headers['x-vanilla-appid'] = self.app_id
                     http_client.headers['x-vanilla-appsign'] = app_sign
-                    # await asyncio.sleep(3)
+                    await asyncio.sleep(sleep)
                     response = await http_client.request(
                         method=method.upper(),
                         url=url,
@@ -490,7 +491,7 @@ class Tapper:
     ) -> Optional[list]:
         params = {"timestamp": int(time() * 1000)}
         payload = {"userId": user_id}
-        response = await self.make_request(http_client=http_client, method="POST", url=sign_claim_api, params=params, payload=payload)
+        response = await self.make_request(http_client=http_client, method="POST", url=sign_claim_api, params=params, payload=payload, sleep=5)
         if response.get('code', 0) == 0:
             return True
         return False
@@ -522,7 +523,7 @@ class Tapper:
     ) -> Optional[dict]:
         params = {"timestamp": int(time() * 1000)}
         payload = {"userId": user_id}
-        response = await self.make_request(http_client=http_client, method="POST", url=daily_sign_claim_api, params=params, payload=payload)
+        response = await self.make_request(http_client=http_client, method="POST", url=daily_sign_claim_api, params=params, payload=payload, sleep=5)
         return response.get('data', {})
 
     async def activity_list(
@@ -558,14 +559,15 @@ class Tapper:
         self,
         http_client: CloudflareScraper,
         user_id: int,
-        tap: int
+        tap: int,
+        sleep: int = 2,
     ) -> Optional[dict]:
         params = {"timestamp": int(time() * 1000)}
         payload = {
             "userId": str(user_id),
             "quantity": str(tap)
         }
-        response = await self.make_request(http_client=http_client, method="POST", url=expend_asset_api, params=params, payload=payload)
+        response = await self.make_request(http_client=http_client, method="POST", url=expend_asset_api, params=params, payload=payload, sleep=sleep)
         return response
 
     async def charge_asset(
@@ -618,7 +620,7 @@ class Tapper:
     ) -> Optional[list]:
         params = {"timestamp": int(time() * 1000)}
         payload = {"userId": str(user_id)}
-        response = await self.make_request(http_client=http_client, method="POST", url=level_upgrade_api, params=params, payload=payload)
+        response = await self.make_request(http_client=http_client, method="POST", url=level_upgrade_api, params=params, payload=payload, sleep=6)
         # print(response)
         return response
 
@@ -819,8 +821,12 @@ class Tapper:
                                 available_charge = charge_remaining.get(
                                     "remaining")
 
-                                if available_tap > 10 and till_tapped != required_tap:
-                                    tap_tap = await self.expend_asset(http_client=http_client, user_id=user_id, tap=tap_amount)
+                                if available_tap > 3 * user_level and till_tapped != required_tap:
+                                    
+                                    tap_min, tap_max = settings.TAP_COUNT
+                                    range_factor = (tap_max - tap_min) / 100
+                                    sleep_ = uniform(2 * range_factor, 6 * range_factor)
+                                    tap_tap = await self.expend_asset(http_client=http_client, user_id=user_id, tap=tap_amount, sleep=round(sleep_, 2))
                                     user_info = await self.user_info(http_client=http_client, user_id=user_id)
 
                                     level_data = await self.level_data(http_client=http_client)
